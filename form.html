@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="content-language" content="en-US">
+<meta name="author" content="Vivian Huang">
+<meta name="created" content="2015-04-02">
+<meta name="keywords" content="CSS, HTML, JavaScript, Web Design, Web Development">
+<meta name="description" content="">
+<title>angularJS - Form Elements</title>
+<style type="text/css">
+	html, body {
+		color: #333;
+		font-family: "Lucida Sans", "Lucida Grande", "Lucida Sans Unicode", sans-serif;
+		font-size: 16px;
+		margin: 0;
+		padding: 0;
+	}
+</style>
+</head>
+
+<body ng-app="myApp">
+	<div ng-controller="checkboxCtrl">
+		<ul>
+			<li ng-repeat="item in list">
+				<label><input type="checkbox" ng-model="item.isChecked" ng-change="update(item)">{{item.label}}</label>
+			</li>
+		</ul>
+		<ul>
+			<li ng-repeat="item in list">{{item.label}} is {{item.isChecked}}.</li>
+		</ul>
+	</div>
+  
+	<div ng-controller="radioCtrl">
+		<ul>
+			<li ng-repeat="item in list">
+				<label><input type="radio" name="choice_photo" ng-model="selected" ng-value="item" ng-change="update(item)">{{item.label}}</label>
+			</li>
+		</ul>
+		<ul ng-repeat="item in list">
+			<li>{{item.label}} is {{item.isChecked}}.</li>
+		</ul>
+	</div>
+  
+	<div ng-controller="selectCtrl">
+		<select ng-model="selectedCity" ng-options="city.name for city in list" ng-change="update()">
+			<option value="">Please Select</option>
+		</select>
+		<select ng-model="selectedArea" ng-options="area.name for area in selectedCity.areas">
+			<option value="">Please Select</option>
+		</select>
+		<div>{{selectedCity.name}} {{selectedArea.name}}</div>
+	</div>
+	
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.14/angular.min.js"></script>
+
+<script type="text/javascript">
+/********************
+Related Posts
+1. AngularJS 系列
+http://programer-learn.blogspot.tw/p/angularjs.html
+2. AngularJS 教學 - Controller 進階(2)
+http://programer-learn.blogspot.tw/2014/06/angularjs-controller-1.html
+3. AngularJs Bootstrap Components Tutorials- Part 3 – Building Tabs Directive
+http://subliminalsources.com/175/angularjs-bootstrap-components-tutorials-part-3-building-tabs-directive/
+4. angularjs directive 实例 详解
+http://blog.51yip.com/jsjquery/1607.html
+5. AngularJS Style Guide
+https://github.com/johnpapa/angularjs-styleguide
+6. Service vs Fatory
+http://www.dotblogs.com.tw/blackie1019/archive/2013/10/13/124017.aspx
+7. WHEN TO USE DIRECTIVES, CONTROLLERS, OR SERVICES IN ANGULAR JS
+http://kirkbushell.me/when-to-use-directives-controllers-or-services-in-angular/
+8. 13 Steps to AngularJS Modularization
+https://blog.safaribooksonline.com/2014/03/27/13-step-guide-angularjs-modularization/
+9. 浅析Angularjs Provider使用
+https://www.zybuluo.com/bornkiller/note/30564
+10. The Hitchhiker’s Guide to the Directive
+https://amitgharat.wordpress.com/2013/06/08/the-hitchhikers-guide-to-the-directive/
+11. AngularJS Best Practices: Directory Structure
+https://scotch.io/tutorials/angularjs-best-practices-directory-structure
+********************/
+
+(function () {
+	//'use strict';
+
+	angular.module('myApp', [])
+		.controller('checkboxCtrl', checkboxCtrl)
+		.controller('radioCtrl', radioCtrl)
+		.controller('selectCtrl', selectCtrl);
+
+	function checkboxCtrl($scope) {
+		$scope.list = [
+			{label: 'Label One', isChecked: false},
+			{label: 'Label Two', isChecked: true},
+			{label: 'Label Three', isChecked: false},
+			{label: 'Label Four', isChecked: true},
+			{label: 'Label Five', isChecked: false}
+		];
+  
+		$scope.update = function () {
+			console.log(arguments);
+		};
+	}
+
+	function radioCtrl($scope) {
+		$scope.list = [
+			{label: 'Label One', isChecked: false},
+			{label: 'Label Two', isChecked: false},
+			{label: 'Label Three', isChecked: false},
+			{label: 'Label Four', isChecked: true},
+			{label: 'Label Five', isChecked: false}
+		];
+  		$scope.selected = $scope.list[3];
+  
+		$scope.update = function (selected) {
+			angular.forEach($scope.list, function(item) {
+				item.isChecked = false;
+			});
+			selected.isChecked = true;
+			console.log($scope.selected);
+		};
+	}
+
+	function selectCtrl($scope) {
+		$scope.list = [
+			{
+				code: 'A',
+				name: 'Taipei',
+				areas: [
+					{code: 'AA', name: 'Taipei 1'},
+					{code: 'AB', name: 'Taipei 2'},
+					{code: 'AC', name: 'Taipei 3'}
+				]
+			},
+			{
+				code: 'B',
+				name: 'New Taipei',
+				areas: [
+					{code: 'BA', name: 'New Taipei 1'},
+					{code: 'BB', name: 'New Taipei 2'},
+					{code: 'BC', name: 'New Taipei 3'}
+				]
+			},
+			{
+				code: 'C',
+				name: 'Kaohsiung',
+				areas: [
+					{code: 'CA', name: 'Kaohsiung 1'},
+					{code: 'CB', name: 'Kaohsiung 2'},
+					{code: 'CC', name: 'Kaohsiung 3'}
+				]
+			}
+		];
+		$scope.selectedCity = {};
+		$scope.selectedArea = {};
+  
+		$scope.update = function () {
+			$scope.selectedArea = {};
+		};
+	}
+
+})();
+</script>
+
+</body>
+</html>

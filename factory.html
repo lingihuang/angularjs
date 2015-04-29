@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="content-language" content="en-US">
+<meta name="author" content="Vivian Huang">
+<meta name="created" content="2015-04-02">
+<meta name="keywords" content="CSS, HTML, JavaScript, Web Design, Web Development">
+<meta name="description" content="">
+<title>angularJS - Factory vs Service</title>
+<style type="text/css">
+	html, body {
+		color: #333;
+		font-family: "Lucida Sans", "Lucida Grande", "Lucida Sans Unicode", sans-serif;
+		font-size: 16px;
+		margin: 0;
+		padding: 0;
+	}
+</style>
+</head>
+
+<body ng-app="myApp">
+	<div ng-controller="factoryCtrl">
+		<p>{{fromFactory}}<p>
+		<p>{{fromService}}<p>
+	</div>
+  
+	<div ng-controller="serviceCtrl">
+		<p>{{fromFactory}}<p>
+		<p>{{fromService}}<p>
+	</div>
+
+	<div ng-controller="peopleCtrl">
+		<ul>
+			<li ng-repeat="person in people">{{person.name}} is {{person.age}} years old.</li>
+		</ul>
+		<button add-person-button>Add Person</button>
+	</div>
+	
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.14/angular.min.js"></script>
+
+<script type="text/javascript">
+/********************
+Related Posts
+1. AngularJS 系列
+http://programer-learn.blogspot.tw/p/angularjs.html
+2. AngularJS 教學 - Controller 進階(2)
+http://programer-learn.blogspot.tw/2014/06/angularjs-controller-1.html
+3. AngularJs Bootstrap Components Tutorials- Part 3 – Building Tabs Directive
+http://subliminalsources.com/175/angularjs-bootstrap-components-tutorials-part-3-building-tabs-directive/
+4. angularjs directive 实例 详解
+http://blog.51yip.com/jsjquery/1607.html
+5. AngularJS Style Guide
+https://github.com/johnpapa/angularjs-styleguide
+6. Service vs Fatory
+http://www.dotblogs.com.tw/blackie1019/archive/2013/10/13/124017.aspx
+7. WHEN TO USE DIRECTIVES, CONTROLLERS, OR SERVICES IN ANGULAR JS
+http://kirkbushell.me/when-to-use-directives-controllers-or-services-in-angular/
+8. 13 Steps to AngularJS Modularization
+https://blog.safaribooksonline.com/2014/03/27/13-step-guide-angularjs-modularization/
+9. 浅析Angularjs Provider使用
+https://www.zybuluo.com/bornkiller/note/30564
+10. The Hitchhiker’s Guide to the Directive
+https://amitgharat.wordpress.com/2013/06/08/the-hitchhikers-guide-to-the-directive/
+11. AngularJS Best Practices: Directory Structure
+https://scotch.io/tutorials/angularjs-best-practices-directory-structure
+********************/
+
+(function () {
+	//'use strict';
+
+	angular.module('myApp', [])
+		.factory('myFactory', myFactory)
+		.service('myService', myService)
+		.factory('People', ['$rootScope', People])
+		.directive('addPersonButton', ['People', addPersonButton])
+		.controller('factoryCtrl', factoryCtrl)
+		.controller('serviceCtrl', serviceCtrl)
+		.controller('peopleCtrl', ['$scope', 'People', peopleCtrl]);
+
+	function myFactory() {
+		function sayHello(text) {
+			return 'Factory says "Hello ' + text + '"';
+		}
+		function sayGoodbye(text) {
+			return 'Factory says "Goodbye ' + text + '"';
+		}
+		return {
+			sayHello   : sayHello,
+			sayGoodbye : sayGoodbye
+	    };
+	}
+
+	function myService() {
+		this.sayHello = function(text) {
+	        return 'Service says "Hello ' + text + '"';
+	    };        
+	    this.sayGoodbye = function(text) {
+	        return 'Service says "Goodbye ' + text + '"';
+	    };   
+	}
+
+	function factoryCtrl($scope, myFactory, myService) {
+		$scope.fromFactory = myFactory.sayHello('World');
+		$scope.fromService = myService.sayHello('World');
+	}
+
+	function serviceCtrl($scope, myFactory, myService) {
+		$scope.fromFactory = myFactory.sayGoodbye('World');
+		$scope.fromService = myService.sayGoodbye('World');
+	}
+
+	function People($rootScope) {
+		var service = {
+			people: [
+				{name: 'AA', age: 13},
+				{name: 'BB', age: 24}
+			],
+			add: function (person) {
+				service.people.push(person);
+				$rootScope.$broadcast('people.update');
+			}
+		};
+		return service;
+	}
+
+	function addPersonButton(People) {
+		return {
+			restrict: 'A',
+			link: function (scope, element, attrs) {
+				element.bind('click', function (e) {
+					People.add({name: 'CC', age: 18});
+				});
+			}
+		};
+	}
+
+	function peopleCtrl($scope, People) {
+		$scope.people = People.people;
+		$scope.$on('people.update', function (e) {
+			$scope.people = People.people;
+			$scope.$apply();
+		});
+	}
+
+})();
+</script>
+
+</body>
+</html>

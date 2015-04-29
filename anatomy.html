@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="content-language" content="en-US">
+<meta name="author" content="Vivian Huang">
+<meta name="created" content="2015-04-02">
+<meta name="keywords" content="CSS, HTML, JavaScript, Web Design, Web Development">
+<meta name="description" content="">
+<title>angularJS - Anatomy</title>
+<style type="text/css">
+	html, body {
+		color: #333;
+		font-family: "Lucida Sans", "Lucida Grande", "Lucida Sans Unicode", sans-serif;
+		font-size: 16px;
+		margin: 0;
+		padding: 0;
+	}
+	.form {
+		margin: 10px;
+	}
+	.form .input-text {
+		border: 1px solid #ccc;
+		color: #333;
+		font-size: 16px;
+		padding: 5px 5px;
+	}
+	.list {
+		margin: 10px;
+	}
+	.list > thead > tr > th{
+		background: #ddd;
+		font-weight: normal;
+		padding: 5px 12px;
+	}
+	.list > tbody > tr > td {
+		background: #eee;
+		padding: 5px 12px;
+	}
+</style>
+</head>
+
+<body ng-app="myApp">
+	<form class="form" ng-controller="addUserCtrl">
+		<input type="text" class="input-text" value="" ng-model="name" placeholder="Name">
+		<input type="text" class="input-text" value="" ng-model="age" placeholder="Age">
+		<button class="action" ng-click="add()">Add</button>
+	</form>
+
+	<table class="list" ng-controller="userListCtrl">
+		<thead>
+			<tr>
+				<th>Name</th>
+				<th>Age</th>
+				<th>Action</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr ng-repeat="user in users">
+				<td>{{user.name}}</td>
+				<td>{{user.age}}</td>
+				<td><button ng-click="delete(user)">Delete</button></td>
+			<tr>
+		</tbody>
+	</table>  
+	
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.min.js"></script>
+
+<script type="text/javascript">
+/********************
+Related Posts
+1. AngularJS 系列
+http://programer-learn.blogspot.tw/p/angularjs.html
+2. AngularJS 教學 - Controller 進階(2)
+http://programer-learn.blogspot.tw/2014/06/angularjs-controller-1.html
+3. AngularJs Bootstrap Components Tutorials- Part 3 – Building Tabs Directive
+http://subliminalsources.com/175/angularjs-bootstrap-components-tutorials-part-3-building-tabs-directive/
+4. angularjs directive 实例 详解
+http://blog.51yip.com/jsjquery/1607.html
+5. AngularJS Style Guide
+https://github.com/johnpapa/angularjs-styleguide
+6. Service vs Fatory
+http://www.dotblogs.com.tw/blackie1019/archive/2013/10/13/124017.aspx
+7. WHEN TO USE DIRECTIVES, CONTROLLERS, OR SERVICES IN ANGULAR JS
+http://kirkbushell.me/when-to-use-directives-controllers-or-services-in-angular/
+8. 13 Steps to AngularJS Modularization
+https://blog.safaribooksonline.com/2014/03/27/13-step-guide-angularjs-modularization/
+9. 浅析Angularjs Provider使用
+https://www.zybuluo.com/bornkiller/note/30564
+10. The Hitchhiker’s Guide to the Directive
+https://amitgharat.wordpress.com/2013/06/08/the-hitchhikers-guide-to-the-directive/
+11. AngularJS Best Practices: Directory Structure
+https://scotch.io/tutorials/angularjs-best-practices-directory-structure
+********************/
+
+(function () {
+	//'use strict';
+
+	angular.module('myApp', [])
+		.factory('UserModel', ['$http', '$q', UserModel])
+		.service('UserAction', ['$rootScope', UserAction])
+		.controller('addUserCtrl', addUserCtrl)
+		.controller('userListCtrl', userListCtrl);
+
+	function UserModel($http, $q) {
+		function getData() {
+			return [
+				{name: 'Jackie', age: 32},
+				{name: 'Vivian', age: 38}
+			];
+		}
+
+		function query() {
+			var defer = $q.defer();
+			$http.get('getUserList.php')
+				.success(function (data, status, headers, config) {
+					if (data.status === 'ok') {
+						defer.resolve(data.users);
+					}
+				}).error(function (data, status, headers, config) {
+					defer.reject('Failed to get user list.');
+				});
+			return defer.promise;
+		}
+
+		return {
+			getData : getData,
+			query   : query
+		};
+	}
+
+	function UserAction($rootScope) {
+		this.users = [];
+
+		this.add = function (user) {
+			this.users.push(user);
+			$rootScope.$broadcast('user.add', user);
+		};
+
+		this.delete = function (user) {
+			if (this.users.indexOf(user) > -1) {
+				this.users.splice(this.users.indexOf(user), 1);
+				$rootScope.$broadcast('user.delete', user);
+			}
+		};
+	}
+
+	function addUserCtrl($scope, UserAction) {
+		$scope.name = '';
+		$scope.age  = '';
+
+		$scope.add = function () {
+			UserAction.add({
+				name : $scope.name,
+				age  : parseInt($scope.age, 10)
+			});
+		};
+
+		$scope.$on('user.add', function (e, user) {
+			console.log('user.add');
+		});
+	}
+
+	function userListCtrl($scope, UserModel, UserAction) {
+		//UserAction.users = UserModel.getData();
+		$scope.users     = [];
+
+		function getUserData() {
+			UserModel.query()
+                .then(function(data) {
+                    UserAction.users = data;
+                    $scope.users     = data;
+                }, function(data) {
+                    console.log('Users retrieval failed.')
+                });
+		}
+
+		$scope.delete = function (user) {
+			UserAction.delete(user);
+		};
+
+		$scope.$on('user.delete', function (e, user) {
+			console.log('user.delete');
+		});
+
+		getUserData();
+	}
+
+})();
+</script>
+
+</body>
+</html>

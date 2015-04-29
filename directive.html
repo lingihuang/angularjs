@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="content-language" content="en-US">
+<meta name="author" content="Vivian Huang">
+<meta name="created" content="2015-04-02">
+<meta name="keywords" content="CSS, HTML, JavaScript, Web Design, Web Development">
+<meta name="description" content="">
+<title>angularJS - Directive</title>
+<style type="text/css">
+	html, body {
+		color: #333;
+		font-family: "Lucida Sans", "Lucida Grande", "Lucida Sans Unicode", sans-serif;
+		font-size: 16px;
+		margin: 0;
+		padding: 0;
+	}
+	h2 {
+		margin: 0 0 10px 0;
+		padding: 0;
+	}
+	p {
+		margin: 10px 0;
+	}
+	.section {
+		margin: 10px 10px 50px 10px;
+	}
+	.input-text {
+		border: 1px solid #ccc;
+		color: #333;
+		font-size: 16px;
+		margin: 0 0 0 5px;
+		padding: 2px 8px;
+	}
+	.action-button {
+		color: #333;
+		font-size: 16px;
+		padding: 2px 20px;
+	}
+	.dropdown {
+		width: 300px;
+	}
+	.dropdown > .dropdown-button {
+		background: #fff;
+		border: 1px solid #ddd;
+		color: #333;
+		display: block;
+		padding: 5px 8px;
+		text-decoration: none;
+	}
+	.dropdown > .dropdown-button:hover {
+		background: #eee;
+	}
+	.dropdown.show > .dropdown-menu {
+		display: block;
+	}
+	.dropdown > .dropdown-menu {
+		border: 1px solid #ddd;
+		display: none;
+		list-style: none;
+		margin: -1px 0 0 0;
+		padding: 0;
+	}
+	.dropdown > .dropdown-menu > li {
+		margin: 0;
+		padding: 0;
+	}
+	.dropdown > .dropdown-menu > li > a {
+		background: #fff;
+		color: #333;
+		display: block;
+		padding: 3px 8px;
+		text-decoration: none;
+	}
+	.dropdown > .dropdown-menu > li > a:hover {
+		background: #eee;
+	}
+</style>
+</head>
+
+<body ng-app="myApp">
+	<div class="section" ng-controller="directiveCtrl">
+		<h3>Parent</h3>
+		<p>{{user.name}} is {{user.age}} years old.</p>
+		<h3>Shared Directive</h3>
+		<p shared-directive></p>
+		<h3>Isolated Directive</h3>
+		<p isolated-directive></p>
+		<h3>Text Binding Directive</h3>
+		<p text-binding-directive addr="{{address}}"></p>
+		<h3>One-Way Binding Directive</h3>
+		<p one-way-binding-directive action="add()"></p>
+		<h3>Two-Way Binding Directive</h3>
+		<p two-way-binding-directive user="user"></p>
+	</div>
+
+	<div class="section" ng-controller="dropdownCtrl">
+		<h2>Dropdown Directive</h2>
+		<div class="dropdown" dropdown>
+			<a class="dropdown-button" href="#" dropdown-toggle>Toggle Dropdown Menu</a>
+			<ul class="dropdown-menu">
+				<li><a href="#">Item One</a></li>
+				<li><a href="#">Item Two</a></li>
+				<li><a href="#">Item Three</a></li>
+				<li><a href="#">Item Four</a></li>
+				<li><a href="#">Item Five</a></li>
+			</ul>
+		</div>
+	</div>
+  
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.14/angular.min.js"></script>
+
+<script type="text/javascript">
+/********************
+Related Posts
+1. AngularJS 系列
+http://programer-learn.blogspot.tw/p/angularjs.html
+2. AngularJS 教學 - Controller 進階(2)
+http://programer-learn.blogspot.tw/2014/06/angularjs-controller-1.html
+3. AngularJs Bootstrap Components Tutorials- Part 3 – Building Tabs Directive
+http://subliminalsources.com/175/angularjs-bootstrap-components-tutorials-part-3-building-tabs-directive/
+4. angularjs directive 实例 详解
+http://blog.51yip.com/jsjquery/1607.html
+5. AngularJS Style Guide
+https://github.com/johnpapa/angularjs-styleguide
+6. Service vs Fatory
+http://www.dotblogs.com.tw/blackie1019/archive/2013/10/13/124017.aspx
+7. WHEN TO USE DIRECTIVES, CONTROLLERS, OR SERVICES IN ANGULAR JS
+http://kirkbushell.me/when-to-use-directives-controllers-or-services-in-angular/
+8. 13 Steps to AngularJS Modularization
+https://blog.safaribooksonline.com/2014/03/27/13-step-guide-angularjs-modularization/
+9. 浅析Angularjs Provider使用
+https://www.zybuluo.com/bornkiller/note/30564
+10. The Hitchhiker’s Guide to the Directive
+https://amitgharat.wordpress.com/2013/06/08/the-hitchhikers-guide-to-the-directive/
+11. AngularJS Best Practices: Directory Structure
+https://scotch.io/tutorials/angularjs-best-practices-directory-structure
+********************/
+
+(function () {
+	//'use strict';
+
+	angular.module('myApp', ['dropdownModule'])
+		.directive('sharedDirective', sharedDirective)
+		.directive('isolatedDirective', isolatedDirective)
+		.directive('textBindingDirective', textBindingDirective)
+		.directive('oneWayBindingDirective', oneWayBindingDirective)
+		.directive('twoWayBindingDirective', twoWayBindingDirective)
+		.controller('directiveCtrl', directiveCtrl)
+		.controller('dropdownCtrl', dropdownCtrl);
+
+	function sharedDirective() {
+		return {
+			template: '{{user.name}} is {{user.age}} years old. <input type="text" class="input-text" ng-model="user.name" placeholder="Please enter your name.">'
+		};
+	}
+
+	function isolatedDirective() {
+		return {
+			scope: {},
+			template: '{{user.name}} is {{user.age}} years old. <input type="text" class="input-text" ng-model="user.name" placeholder="Please enter your name.">',
+			link: function (scope, element, attrs) {
+				
+			}
+		};
+	}
+
+	function textBindingDirective() {
+		return {
+			scope: {
+				addr: '@'
+			},
+			template: 'Address: {{addr}}.',
+			link: function (scope, element, attrs) {
+				
+			}
+		};
+	}
+
+	function oneWayBindingDirective() {
+		return {
+			scope: {
+				action: '&'
+			},
+			template: '<button class="action-button" ng-click="action()">Add</button>',
+			replace: true,
+			link: function (scope, element, attrs) {
+				
+			}
+		};
+	}
+
+	function twoWayBindingDirective() {
+		return {
+			scope: {
+				user: '='
+			},
+			template: '{{user.name}} is {{user.age}} years old. <input type="text" class="input-text" ng-model="user.name" placeholder="Please enter your name.">',
+			link: function (scope, element, attrs) {
+				
+			}
+		};
+	}
+
+	function directiveCtrl($scope) {
+		$scope.user = {
+			name: 'Vivian',
+			age: 18
+		};
+		$scope.address = 'New Taipei City, Taiwan';
+
+		$scope.add = function () {
+			console.log('Add a person.');
+		};
+	}
+
+	angular.module('dropdownModule', [])
+		.constant('dropdownConfig', {
+			showClass: 'show'
+		})
+		.directive('dropdown', ['$document', 'dropdownConfig', dropdown])
+		.directive('dropdownToggle', dropdownToggle);
+
+	function dropdownController($scope, $element, $attrs, dropdownConfig) {
+		$scope.state = '';
+		this.toggle = function () {
+			$scope.$apply(function () {
+				$scope.state = $scope.state === 'show' ? '' : 'show';
+			});
+		};
+	}
+
+	function dropdown($document, dropdownConfig) {
+		return {
+			restrict   : 'A',
+			controller : function ($scope, $element, $attrs) {
+				$scope.state = '';
+				this.toggle = function () {
+					$scope.$apply(function () {
+						$scope.state = $scope.state === 'show' ? '' : 'show';
+					});
+				};
+			},
+			link       : function (scope, element, attrs, controller) {
+				scope.$watch('state', function (newState, oldState) {
+					if (newState === 'show') {
+						element.addClass(dropdownConfig.showClass);
+					} else {
+						element.removeClass(dropdownConfig.showClass);
+					}
+				});
+
+				$document.on('click', function (e) {
+					if (e && element && controller.toggleElement[0].contains(e.target)) {
+						return;
+					}
+					scope.$apply(function () {
+						scope.state = '';
+					});
+				});
+			}
+		};
+	}
+
+	function dropdownToggle() {
+		return {
+			restrict : 'A',
+			require  : '?^dropdown',
+			link     : function (scope, element, attrs, controller) {
+				controller.toggleElement = element;
+				element.on('click', function (e) {
+					controller.toggle();
+					e.preventDefault();
+				});
+			}
+		};
+	}
+
+	function dropdownCtrl($scope) {
+		
+	}
+
+})();
+</script>
+
+</body>
+</html>
