@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="content-language" content="en-US">
+<meta name="author" content="Vivian Huang">
+<meta name="created" content="2015-05-28">
+<meta name="keywords" content="CSS, HTML, JavaScript, Web Design, Web Development">
+<meta name="description" content="">
+<title>Mobile Touch Event</title>
+<style type="text/css">
+html, body {
+	color: #333;
+	font-family: "Lucida Sans", "Lucida Grande", "Lucida Sans Unicode", sans-serif;
+	font-size: 16px;
+	margin: 0;
+	padding: 0;
+}
+p {
+	font-size: 16px;
+}
+.box {
+	background: #eee;
+	height: 100px;
+	margin: 20px 50px;
+	width: 200px;
+}
+.container {
+	position: relative;
+}
+.box-1 {
+	background: #bbb;
+	height: 200px;
+	left: 50px;
+	position: absolute;
+	top: 20px;
+	width: 400px;
+	z-index: 1;
+}
+.box-2 {
+	background: #eee;
+	height: 400px;
+	left: 0;
+	position: absolute;
+	top: 0;
+	width: 500px;
+}
+.box-1 > .overlay {
+	background: #000;
+	height: 100px;
+	left: 0;
+	position: absolute;
+	opacity: 0.2;
+	top: 40px;
+	width: 260px;
+}
+.box-1 > .content {
+	left: 0;
+	position: absolute;
+	top: 45px;
+	z-index: 1;
+}
+.box-1 > .content > a {
+	color: #000;
+	font-size: 20px;
+}
+.mouseenter {
+	background: #666;
+}
+.touchstart {
+	background: red;
+}
+..touchmove {
+	background: green;
+}
+.touchend {
+	background: orange;
+}
+</style>
+</head>
+
+<body>
+	<p>
+		<span>Events: </span>
+		<span id="events"></span>
+	</p>
+	<p>
+		<span>Start event.changedTouches[0]: </span>
+		<span id="start"></span>
+	</p>
+	<p>
+		<span>End event.changedTouches[0]: </span>
+		<span id="end"></span>
+	</p>
+	<a id="action-me" href="#" style="display:none;">click me</a>
+	<div id="box" class="box"></div>
+
+	<div class="container">
+		<div id="box-1" class="box-1">
+			#box-1
+			<div class="overlay"></div>
+			<div class="content">
+				<a id="action-link" href="http://www.google.com/" target="_blank">http://www.google.com/</a>
+			</div>
+		</div>
+		<div id="box-2" class="box-2">#box-2</div>
+	</div>
+	
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+
+<script type="text/javascript">
+/********************
+Related Posts
+1. Multi-touch Web Development
+http://www.html5rocks.com/en/mobile/touch/
+2. Detecting a swipe (left, right, top or down) using touch
+http://www.javascriptkit.com/javatutors/touchevents2.shtml
+3. Swipe.JS - Detect touch direction and distance
+http://blog.blakesimpson.co.uk/read/51-swipe-js-detect-touch-direction-and-distance
+4. Working with touch events
+http://blog.mobiscroll.com/working-with-touch-events/
+********************/
+
+(function () {
+	var boxSel = $('#box'),
+		startX,
+		startY,
+		eventHtml = [];
+
+	function removeClass() {
+		$(this).removeClass('mouseenter').removeClass('touchstart').removeClass('touchmove').removeClass('touchend');
+	}
+
+	$('#action-me').on('click', function (e) {
+		eventHtml.push('#action-me.click');
+		e.preventDefault();
+	});
+
+	boxSel.on('click', function (e) {
+		eventHtml.push('click');
+		$('#action-me').trigger('click');
+	});
+
+	boxSel.on('mouseenter', function (e) {
+		eventHtml.push('mouseenter');
+		removeClass.call($(this));
+		$(this).addClass('mouseenter');
+	});
+
+	boxSel.on('mouseleave', function (e) {
+		eventHtml.push('mouseleave');
+		removeClass.call($(this));
+	});
+
+	boxSel.get(0).addEventListener('touchstart', function(e) {
+		eventHtml.push('touchstart');
+		removeClass.call($(this));
+		boxSel.addClass('touchstart');
+
+		startX = e.changedTouches[0].pageX;
+		startY = e.changedTouches[0].pageY;
+		$('#start').html(startX + ', ' + startY);
+	}, false);
+
+	boxSel.get(0).addEventListener('touchmove', function(e) {
+		eventHtml.push('touchmove');
+		removeClass.call($(this));
+		boxSel.addClass('touchmove');
+		e.preventDefault(); // event.preventDefault() will stop zooming in/out and kill page scrolling on the mobile device.
+	}, false);
+
+	boxSel.get(0).addEventListener('touchend', function(e) {
+		eventHtml.push('touchend');
+		removeClass.call($(this));
+		boxSel.addClass('touchend');
+
+		var position = e.changedTouches[0];
+		$('#end').html(position.pageX + ', ' + position.pageY);
+		if ((position.pageX - startX) <= 0) {
+			eventHtml.push('Swipe Left');
+		} else {
+			eventHtml.push('Swipe Right');
+		}
+		$('#events').html(eventHtml.join(', '));
+	}, false);
+
+	$('#box-1').get(0).addEventListener('touchstart', function (e) {
+		console.log('#box-1 touchstart');
+		removeClass.call($(this));
+		$(this).addClass('touchstart');
+		//e.preventDefault(); // event.prevetDefault() will stop anchor href wrapped inside the element binding touch event.
+	});
+
+	$('#box-1').get(0).addEventListener('touchmove', function (e) {
+		removeClass.call($(this));
+		$(this).addClass('touchmove');
+	});
+
+	$('#box-1').get(0).addEventListener('touchend', function (e) {
+		console.log('#box-1 touchend');
+		removeClass.call($(this));
+		$(this).addClass('touchend');
+		//e.preventDefault(); // event.prevetDefault() will stop anchor href wrapped inside the element binding touch event.
+	});
+
+})();
+</script>
+
+</body>
+</html>
