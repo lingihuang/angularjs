@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="content-language" content="en-US">
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="author" content="Vivian Huang">
+<meta name="created" content="2015-05-21">
+<meta name="keywords" content="CSS, HTML, JavaScript, Web Design, Web Development">
+<meta name="description" content="">
+<title>Meta Viewport</title>
+<style type="text/css">
+html, body {
+    font: 16px normal Arial;
+    margin: 0;
+    padding: 0;
+}
+.my-container {
+    background: #eee;
+    box-sizing: border-box;
+    padding: 10px 20px;
+    width: 1024px;
+}
+.my-container > ul {
+    border: 1px solid #999;
+    list-style: none;
+    margin: 0 auto;
+    padding: 0;
+    overflow: hidden;
+    width: 980px;
+}
+.my-container > ul > li {
+    float: left;
+    padding: 4px 10px;
+}
+
+h3 {
+    font-size: 18px;
+}
+p {
+    font-size: 16px;
+}
+</style>
+</head>
+
+<body>
+    <div id="output-viewport"></div>
+    <div class="my-container">
+        <ul>
+            <li>item one</li>
+            <li>item one</li>
+            <li>item one</li>
+            <li>item one</li>
+            <li>item one</li>
+            <li>item one</li>
+            <li>item one</li>
+            <li>item one</li>
+            <li>item one</li>
+            <li>item one</li>
+        </ul>
+    </div>
+
+    <h3>免責聲明免責免責聲明免責免責聲明免責免責聲明免責免責聲明免責免責聲明免責免責聲明免責免責聲明免責</h3>
+    <p>本網站系統所使用之全部軟體及所有內容，包括物件、著作、圖片、檔案、資訊、資料、網站架構、網站畫面安排及網頁設計，均受著作權法及相關法令之保護，包括但不限於商標權、專利權、著作權、營業秘密與專有技術等項目。任何人未經書面同意不得使用、修改、重製、公開播送、改作、散布、發行、公開發表、租用、出售、進行還原工程、解編或反向組譯。若須以任何方式使用或轉載前述軟體或網站內容，應取得永慶房屋仲介股份有限公司或其他權利人事前書面同意，否則應自負刑責及民事之損害賠償責任。</p>
+
+<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script type="text/javascript">
+/********************
+Related Posts
+1. [JQUERY] 倒數計時(還有X天X時X分X秒)
+http://blog.patw.me/archives/198/jquery-countdown-as-well-as-x-x-x-minutes-x-seconds/
+********************/
+$(function () {
+    var htmls = [];
+    htmls.push('<p>Widndow Width: ' + $(window).width() + '</p>');
+    htmls.push('<p>Document Width: ' + $(document).width() + '</p>');
+    $('#output-viewport').html(htmls.join(''));
+});
+</script>
+
+</body>
+</html>
