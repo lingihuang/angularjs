@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="content-language" content="en-US">
+<meta name="author" content="Vivian Huang">
+<meta name="created" content="2015-07-13">
+<meta name="keywords" content="CSS, HTML, JavaScript, Web Design, Web Development">
+<meta name="description" content="">
+<title>Pure CSS Percentage Circle</title>
+<style type="text/css">
+html, body {
+    font: 16px normal "Noto Sans CJK TC Medium", "微軟正黑體", "Lucida Sans", "Lucida Grande", "Lucida Sans Unicode", "sans-serif";
+    margin: 0;
+    padding: 0;
+}
+
+.icon-avatar {
+    background: #fff;
+    border-radius: 50%;
+    box-sizing: border-box;
+    height: 100px;
+    overflow: hidden;
+    position: relative;
+    width: 100px;
+}
+.icon-avatar:after {
+    border: 6px solid #ccc;
+    border-radius: 50%;
+    box-sizing: border-box;
+    content: "";
+    display: block;
+    height: 100%;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    z-index: 1;
+}
+.icon-avatar .avatar {
+    height: 100%;
+    line-height: 100px;
+    overflow: hidden;
+    text-align: center;
+    width: 100%;
+}
+.icon-avatar .avatar img {
+    max-height: 100%;
+    max-width: 100%;
+    vertical-align: middle;
+}
+.icon-avatar .slice {
+    left: 0;
+    position: absolute;
+    top: 0;
+    z-index: 2;
+}
+.icon-avatar .bar {
+    border: 6px solid #f98915;
+    border-radius: 50%;
+    box-sizing: border-box;
+    clip: rect(0, 100px, 50px, 0);
+    height: 100px;
+    position: absolute;
+    width: 100px;
+    left: 0;
+    top: 0;
+    transform: rotate(320deg);
+}
+.icon-avatar .fill {
+    border: 6px solid #f98915;
+    border-radius: 50%;
+    box-sizing: border-box;
+    clip: rect(0, 100px, 50px, 0);
+    height: 100px;
+    position: absolute;
+    width: 100px;
+    left: 0;
+    top: 0;
+    transform: rotate(20deg);
+}
+</style>
+</head>
+
+<body>
+    <!--
+    Related Posts
+    1. Pure CSS Percentage Circle
+    http://circle.firchow.net/
+    2. CSS Masking
+    http://www.html5rocks.com/en/tutorials/masking/adobe/?redirect_from_locale=tw
+    3. Clipping and Masking in CSS
+    https://css-tricks.com/clipping-masking-css/
+    -->
+    <h2>Pure CSS Percentage Circle</h2>
+    <div class="icon-avatar">
+        <div class="avatar">
+            <img src="images/avatar.png">
+            <!--<img src="https://upload.wikimedia.org/wikipedia/commons/a/a4/Ggb_by_night.jpg">
+            <img src="http://www.takemytrip.com/images/448_DSC03171_adj2.jpg">-->
+        </div>
+        <div class="slice">
+            <div class="bar"></div>
+            <div class="fill"></div>
+        </div>
+    </div>
+</body>
+</html>
