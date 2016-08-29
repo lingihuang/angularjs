@@ -1,0 +1,27 @@
+.jv-tabs {
+    border-top: 2px solid #f0f0f0;
+    .jv-tabs-nav {
+        display: flex;
+        justify-content: center;
+    }
+    .jv-tabs-item {
+        background-color: #e0e0e0;
+        color: #000;
+        flex: 0 0 50%;
+        font-size: 1em;
+        line-height: 2;
+        overflow: hidden;
+        text-align: center;
+        text-decoration: none;
+        text-transform: uppercase;
+        white-space: pre-wrap;
+        word-break: normal;
+        word-wrap: break-word;
+        &.active {
+            background-color: #fff;
+        }
+    }
+    .jv-tabs-content {
+        @include box-sizing(border-box);
+    }
+}

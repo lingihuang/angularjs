@@ -1,0 +1,44 @@
+body {
+    font-family: 'OpenSans Condensed';
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+button,
+input,
+select,
+textarea,
+.tab-item {
+    font-family: 'OpenSans Condensed';
+}
+
+.ionic-scroll.scroll-x {
+    &::-webkit-scrollbar {
+        -webkit-appearance: none;
+        height: 4px;
+        width: 4px;
+    }
+    &::-webkit-scrollbar-track {
+        @include border-radius(0);
+    }
+    &::-webkit-scrollbar-thumb {
+        background: #fff;
+        @include border-radius(0);
+    }
+    &::-webkit-scrollbar-thumb:window-inactive {
+        background: #ddd;
+    }
+}
+
+@media screen and (min-width: 481px) and (max-width: 979px) {
+    .ionic-scroll {
+        ::-webkit-scrollbar {
+            height: 6px;
+            width: 6px;
+        }
+    }
+}

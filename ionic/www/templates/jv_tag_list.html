@@ -1,0 +1,72 @@
+<div class="jv-tabs jv-tag-list" ng-class="isShowSubtag ? 'open' : ''" ng-show="show">
+    <div class="jv-tabs-nav">
+        <a class="jv-tabs-item" ng-repeat="(tabIdx, tab) in tabs" ng-class="selectedTabIdx == tabIdx ? 'active' : ''" ng-click="handleClickTab(tabIdx)" ng-init="onInvCategoryTabCreated(tabIdx)">{{::tab}}</a>
+    </div>
+    <div class="jv-tabs-content" ng-show="selectedTabIdx == 0">
+        <ion-scroll delegate-handle="categoryListDelegate" ng-style="categoryListScrollStyles" jv-tag-list-rendered>
+            <div class="col" ng-repeat="(catIdx, category) in categories track by $index">
+                <label id="ftue_category_item_{{category.name}}" class="item" ng-class="selectedCatIdx == catIdx ? 'active' : ''">
+                    <div class="img">
+                        <img ng-src="{{category.imgSrc}}" />
+                    </div>
+                    <input type="checkbox" name="category" ng-model="category.checked" ng-click="handleClickCategory($event, category, catIdx)">
+                    <div class="name">{{category.name}}</div>
+                    <div class="count">{{category.count}}</div>
+                    <div class="overlay"></div>
+                </label>
+                <div class="list-subtag" ng-if="catIdx % 4 == 3 || catIdx == categories.length - 1" ng-class="catIdx == listSubtagIdx ? 'active' : ''">
+                    <ion-scroll direction="x" delegate-handle="subcategoryListDelegate_{{catIdx}}">
+                        <label class="item item-all" ng-if="category.show"  ng-repeat="subcategory in categories[selectedCatIdx].subcategories | filter : filterAll">
+                            <input type="checkbox" name="subcategory_all" ng-model="subcategory.checked" ng-click="handleClickSubcategory($event, subcategory, selectedCatIdx)">
+                            <div class="name">All Items</div>
+                        </label>
+                        <label class="item" ng-if="category.show"  ng-repeat="subcategory in categories[selectedCatIdx].subcategories | filter : filterNotAll">
+                            <div class="img">
+                                <img ng-src="{{subcategory.imgSrc}}" />
+                            </div>
+                            <input type="checkbox" name="subcategory" ng-model="subcategory.checked" ng-click="handleClickSubcategory($event, subcategory)">
+                            <div class="name">{{subcategory.name}}</div>
+                            <div class="count">{{subcategory.count}}</div>
+                        </label>
+                    </ion-scroll>
+                </div>
+            </div>
+        </ion-scroll>
+    </div>
+    <div class="jv-tabs-content" ng-show="selectedTabIdx == 1">
+        <ion-scroll delegate-handle="filterListDelegate" jv-tag-list-rexndered>
+            <div class="col" ng-repeat="(filterIdx, filter) in filters">
+                <label id="ftue_filter_tag_{{$index}}" class="item" ng-class="selectedFilterIdx == filterIdx ? 'active' : ''">
+                    <div class="img">
+                        <img ng-src="{{filter.imgSrc}}" />
+                    </div>
+                    <input type="checkbox" name="filter" ng-model="filter.checked" ng-click="handleClickFilter($event, filter, filterIdx)">
+                    <div class="name">{{filter.name}}</div>
+                    <div class="count">{{filter.count}}</div>
+                    <div class="overlay"></div>
+                </label>
+                <div class="list-subtag" ng-if="filterIdx % 4 == 3 || filterIdx == filters.length - 1" ng-class="filterIdx == listSubtagIdx ? 'active' : ''">
+                    <ion-scroll direction="x" delegate-handle="subfilterListDelegate_{{filterIdx}}">
+                        <label class="item item-all" ng-if="filter.show" ng-repeat="subfilter in filters[selectedFilterIdx].subfilters | filter : filterAll">
+                            <input type="checkbox" name="subfilter_all" ng-model="subfilter.checked" ng-click="handleClickSubfilter($event, subfilter)">
+                            <div class="name">All Items</div>
+                        </label>
+                        <label id="ftue_filter_subtag_{{$index}}" class="item" ng-if="filter.show" ng-repeat="subfilter in filters[selectedFilterIdx].subfilters | filter : filterNotAll">
+                            <div class="img">
+                                <img ng-src="{{subfilter.imgSrc}}" />
+                            </div>
+                            <input type="checkbox" name="subfilter" ng-model="subfilter.checked" ng-click="handleClickSubfilter($event, subfilter)">
+                            <div class="name">{{subfilter.name}}</div>
+                            <div class="count">{{subfilter.count}}</div>
+                        </label>
+                    </ion-scroll>
+                </div>
+            </div>
+        </ion-scroll>
+    </div>
+    <div class="actions" ng-class="isShowAction ? 'show' : ''">
+        <button class="cta-light" ng-show="!hasSelectedTags()" ng-click="handleSelectAll()">Select All</button>
+        <button class="cta-light" ng-show="hasSelectedTags()" ng-click="handleClearAll()">Clear All</button>
+        <button id="ftue_submit_filter_button" class="cta-light" ng-click="handleSubmit()">Done</button>
+    </div>
+</div>

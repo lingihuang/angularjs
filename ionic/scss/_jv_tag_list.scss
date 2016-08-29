@@ -1,0 +1,282 @@
+.jv-tag-list {
+    bottom: 0;
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+    .jv-tabs-item {
+        font-size: 1.2em;
+    }
+    .jv-tabs-content {
+        > .overflow-scroll {
+            > .scroll {
+                height: 137%;
+            }
+        }
+    }
+    .actions {
+        @include box-sizing(border-box);
+        left: 0;
+        opacity: 0;
+        padding: 0 0 0 0.5%;
+        position: fixed;
+        right: 0;
+        > .cta-light {
+            @include box-sizing(border-box);
+            display: inline-block;
+            font-size: 1.2em;
+            padding: 2.3% 0;
+            width: 49.5%;
+        }
+        &.show {
+            bottom: 48px;
+            opacity: 1;
+        }
+    }
+    .col {
+        margin: 0 0 0 0.5%;
+        padding: 0;
+        > .item {
+            float: left;
+            .overlay {
+                background: #fff;
+                bottom: 0;
+                left: 0;
+                opacity: 0;
+                position: absolute;
+                right: 0;
+                top: 0;
+                transition: opacity 0.5s;
+            }
+        }
+    }
+    .item {
+        background: #edede8;
+        border: none;
+        @include box-sizing(border-box);
+        margin: 1% 1% 0.1% 0;
+        padding: 2%;
+        position: relative;
+        text-align: center;
+        width: 24%;
+        input[type="checkbox"] {
+            left: 4%;
+            position: absolute;
+            top: 4%;
+        }
+    }
+    .img {
+        background: transparent;
+        @include box-sizing(border-box);
+        height: auto;
+        margin: 14% 0 1% 0;
+        width: 100%;
+        > img {
+            max-height: 100%;
+            max-width: 100%;
+        }
+        > .img-box {
+            background: #b0b0b0;
+            height: 150px;
+            max-height: 100%;
+            max-width: 100%;
+            width: 150px;
+        }
+    }
+    .name {
+        color: #454545;
+        display: inline-block;
+        font-size: 0.8em;
+    }
+    .count {
+        background: #ccc;
+        color: #000;
+        font-size: 0.8em;
+        line-height: 1.2;
+        padding: 1% 4%;
+        position: absolute;
+        right: 0;
+        top: 0;
+    }
+    .list-subtag {
+        background: #fff;
+        @include box-sizing(border-box);
+        float: left;
+        height: auto;
+        max-height: 0;
+        opacity: 1;
+        overflow: hidden;
+        padding: 0 1%;
+        transition: max-height 0.6s;
+        width: 100%;
+        .scroll-view {
+            height: 100%;
+            overflow-x: hidden;
+            white-space: nowrap;
+        }
+        .scroll {
+            display: flex;
+        }
+        .item {
+            display: inline-block;
+            flex: 0 0 24%;
+            margin-bottom: 0.4%;
+            width: 24%;
+            &.item-all {
+                align-items: center;
+                display: flex;
+                flex: 0 0 12%;
+                justify-content: center;
+                width: 12%;
+                .img {
+                    margin-top: 28%;
+                }
+                .name {
+                    text-transform: uppercase;
+                    white-space: pre-wrap;
+                    word-break: normal;
+                    word-wrap: break-word;
+                }
+            }
+        }
+    }
+    &.open {
+        .jv-tabs-content {
+            > .overflow-scroll {
+                > .scroll {
+                    height: 161%;
+                }
+            }
+        }
+        .col {
+            > .item {
+                .overlay {
+                    opacity: 0.8;
+                }
+                &.active {
+                    .overlay {
+                        opacity: 0;
+                    }
+                }
+            }
+        }
+        .list-subtag {
+            &.active {
+                max-height: 250px;
+                .scroll-view {
+                    overflow-x: scroll;
+                }
+            }
+        }
+    }
+}
+
+/* iPhone 4, iPhone 5 */
+@media screen and (max-device-width: 320px) {
+    .jv-tag-list {
+        .jv-tabs-content {
+            > .overflow-scroll {
+                > .scroll {
+                    height: 156%;
+                }
+            }
+        }
+        &.open {
+            .jv-tabs-content {
+                > .overflow-scroll {
+                    > .scroll {
+                        height: 183%;
+                    }
+                }
+            }
+        }
+    }
+}
+
+/* iPhone 6 */
+@media screen and (min-width: 321px) and (max-device-width: 413px) {
+    .jv-tag-list {
+        .jv-tabs-content {
+            > .overflow-scroll {
+                > .scroll {
+                    height: 155%;
+                }
+            }
+        }
+        &.open {
+            .jv-tabs-content {
+                > .overflow-scroll {
+                    > .scroll {
+                        height: 181%;
+                    }
+                }
+            }
+        }
+    }
+}
+
+/* iPhone 6 Plus */
+@media screen and (min-width: 414px) and (max-device-width: 480px) {
+    .jv-tag-list {
+        .jv-tabs-content {
+            > .overflow-scroll {
+                > .scroll {
+                    height: 137%;
+                }
+            }
+        }
+        &.open {
+            .jv-tabs-content {
+                > .overflow-scroll {
+                    > .scroll {
+                        height: 161%;
+                    }
+                }
+            }
+        }
+    }
+}
+
+/* Asus Nexus 7 */
+@media screen and (min-width: 481px) and (max-width: 767px) {
+    .jv-tag-list {
+        .jv-tabs-content {
+            > .overflow-scroll {
+                > .scroll {
+                    height: 135%;
+                }
+            }
+        }
+        &.open {
+            .jv-tabs-content {
+                > .overflow-scroll {
+                    > .scroll {
+                        height: 160%;
+                    }
+                }
+            }
+        }
+    }
+}
+
+/* iPad, iPad mini */
+@media screen and (min-width: 768px) and (max-width: 979px) {
+    .jv-tag-list {
+        .jv-tabs-content {
+            > .overflow-scroll {
+                > .scroll {
+                    height: 151%;
+                }
+            }
+        }
+        &.open {
+            .jv-tabs-content {
+                > .overflow-scroll {
+                    > .scroll {
+                        height: 180%;
+                    }
+                }
+            }
+        }
+    }    
+}

@@ -1,0 +1,16 @@
+<ion-view class="view-main-container">
+    <tab-slide-box tab="{{tab}}">
+        <div class="tsb-icons">
+            <div class="tsb-ic-wrp">
+                <ion-scroll direction="x" delegate-handle="tabScroller" class="tsb-hscroll" on-scroll="scrollTab()">
+                    <a class="rf-ripple" href="javascript:;" ng-repeat="submenu in menus[3].submenus" ng-class="{'active': submenu.selected}" ng-click="handleSubmenuClick(3, $index)" on-finish-render>{{::submenu.name}}</a>
+                </ion-scroll>
+            </div>
+        </div>
+        <ion-slide-box show-pager="false" on-slide-changed="slideChanged($index)">
+            <ion-slide>Menu One</ion-slide>
+            <ion-slide>Menu Two</ion-slide>
+            <ion-slide>Menu Three</ion-slide>
+        </ion-slide-box>
+    </tab-slide-box>
+</ion-view>

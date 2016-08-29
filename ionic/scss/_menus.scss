@@ -1,0 +1,83 @@
+.button-bar-menu {
+    box-shadow: none;
+    display: block;
+    position: relative;
+    z-index: 4;
+    padding: 0px;
+    .scroll-view {
+        background: #262626;
+        @include clearfix;
+        height: 45px;
+        overflow: none;
+        white-space: nowrap;
+        width: 100%;
+        .button {
+            background: #262626;
+            border: none;
+            box-shadow: none;
+            @include box-sizing(border-box);
+            color: #999;
+            font-size: 1.1em;
+            height: 45px;
+            line-height: 45px;
+            margin-left: -4px;
+            min-height: 45px;
+            min-width: 90px;
+            padding: 0 5px;
+            position: relative;
+            text-transform: uppercase;
+            z-index:0;
+            em {
+                font-style: normal;
+            }
+            &:after {
+                background: #999;
+                content: "";
+                display: block;
+                height: 60%;
+                left: 0;
+                position: absolute;
+                top: 10px;
+                width: 1px;
+            }
+            &.active {
+                color: #fff;
+                font-weight: bold;
+            }
+            .badge {
+                padding:0;
+                font-size: 1em;
+                text-align: center;
+                line-height: 18px;
+                position: absolute;
+                color:#000000;
+                font-weight:bold;
+                top: 0px;
+                right: 5px;
+                border-radius: 10px;
+                width: 20px;
+                height: 20px;
+                background-color: #afe0e7;
+                border:1px solid #2b81af;
+                z-index:1;
+            }
+        }
+        &.submenu {
+            background: #e8e8e8;
+            .button {
+                background: #e8e8e8;
+                color: #666;
+                &:after {
+                    background: #bfbfbf;
+                }
+                &.active {
+                    border-bottom: 4px solid #333;
+                    color: #333;
+                }
+            }
+        }
+    }
+    .scroll {
+        min-width: 100%;
+    }
+}

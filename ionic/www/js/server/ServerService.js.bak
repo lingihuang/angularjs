@@ -1,0 +1,896 @@
+angular.module('jv.server')
+.factory('ServerService',
+[function($scope, $http) {
+    function requestTabList() {
+        // TODO: request the tab list with api from server.
+        return ['Categories', 'Filter'];
+    }
+
+    function requestCategoryList(successCallback, errorCallback) {
+        // Content Categories https://docs.google.com/document/d/126QHYM0EyaUQga3Y1xmFPaIEDbEwlWCGRf-gXIdnyl4/edit
+        // TODO: request the category list with api.
+        // TODO: Show Model category. Temporarily hide Model category for 1.0 launch.
+        var categories = [
+            // {
+            //     "name"      : "Model",
+            //     "img"       : "img/tags/Category_Model.png",
+            //     "suboptions": [
+            //         {
+            //             "name": "Hair",
+            //             "img" : "img/tags/Model_Hair.png"
+            //         },
+            //         {
+            //             "name": "Makeup",
+            //             "img" : "img/tags/Model_Makeup.png"
+            //         },
+            //         {
+            //             "name": "Skin Tone",
+            //             "img" : "img/tags/Model_SkinTone.png"
+            //         }
+            //     ]
+            // },
+            {
+                "name"      : "Dresses",
+                "img"       : "img/tags/icon_category_dresses.png",
+                "suboptions": [
+                    {
+                        "name": "All",
+                        "img" : "img/tags/SubCat_All.png"
+                    },
+                    {
+                        "name": "Casual",
+                        "img" : "img/tags/Dress_Casual.png"
+                    },
+                    {
+                        "name": "Cocktail",
+                        "img" : "img/tags/Dress_Cocktail.png"
+                    },
+                    {
+                        "name": "Formal",
+                        "img" : "img/tags/Dress_Formal.png"
+                    },
+                    {
+                        "name": "Maxi",
+                        "img" : "img/tags/Dress_Maxi.png"
+                    }
+                ]
+            },
+            {
+                "name"      : "Tops",
+                "img"       : "img/tags/icon_category_tops.png",
+                "suboptions": [
+                    {
+                        "name": "All",
+                        "img" : "img/tags/SubCat_All.png"
+                    },
+                    {
+                        "name": "Blouses",
+                        "img" : "img/tags/Tops_Blouse.png"
+                    },
+                    {
+                        "name": "Crop",
+                        "img" : "img/tags/Tops_CropTop.png"
+                    },
+                    {
+                        "name": "Tanks",
+                        "img" : "img/tags/Tops_Tanktop.png"
+                    },
+                    {
+                        "name": "Tee Long Sleeve",
+                        "img" : "img/tags/Tops_TeeLongSleeve.png"
+                    },
+                    {
+                        "name": "Tee Short Sleeve",
+                        "img" : "img/tags/Tops_TeeShortSleeve.png"
+                    },
+                    {
+                        "name": "Turtleneck",
+                        "img" : "img/tags/Tops_Turtlenecks.png"
+                    }
+                ]
+            },
+            {
+                "name"      : "Sweaters",
+                "img"       : "img/tags/icon_category_sweaters.png",
+                "suboptions": [
+                    {
+                        "name": "All",
+                        "img" : "img/tags/SubCat_All.png"
+                    },
+                    {
+                        "name": "Cardigans",
+                        "img" : "img/tags/Sweater_Cardigan.png"
+                    },
+                    {
+                        "name": "Crew",
+                        "img" : "img/tags/Sweater_Crew.png"
+                    },
+                    {
+                        "name": "V-Neck",
+                        "img" : "img/tags/Sweater_VNeck.png"
+                    },
+                    {
+                        "name": "Turtleneck",
+                        "img" : "img/tags/Sweater_Turtlenecks.png"
+                    }
+                ]
+            },
+            {
+                "name"      : "Jackets",
+                "img"       : "img/tags/icon_category_jackets.png",
+                "suboptions": [
+                    {
+                        "name": "All",
+                        "img" : "img/tags/SubCat_All.png"
+                    },
+                    {
+                        "name": "Biker",
+                        "img" : "img/tags/Jacket_Biker.png"
+                    },
+                    {
+                        "name": "Blazers",
+                        "img" : "img/tags/Jacket_Blazer.png"
+                    },
+                    {
+                        "name": "Coats",
+                        "img" : "img/tags/Jacket_Coats.png"
+                    },
+                    {
+                        "name": "Shawl",
+                        "img" : "img/tags/Jacket_Shawl.png"
+                    }
+                ]
+            },
+            {
+                "name"      : "Vests",
+                "img"       : "img/tags/icon_category_vests.png",
+                "suboptions": [
+                    {
+                        "name": "All",
+                        "img" : "img/tags/SubCat_All.png"
+                    },
+                    {
+                        "name": "Long",
+                        "img" : "img/tags/Vest_Long.png"
+                    },
+                    {
+                        "name": "Short",
+                        "img" : "img/tags/Vest_Short.png"
+                    }
+                ]
+            },
+            {
+                "name"      : "Pants",
+                "img"       : "img/tags/icon_category_pants.png",
+                "suboptions": [
+                    {
+                        "name": "All",
+                        "img" : "img/tags/SubCat_All.png"
+                    },
+                    {
+                        "name": "Skinny",
+                        "img" : "img/tags/Pants_Skinny.png"
+                    },
+                    {
+                        "name": "Straight Leg",
+                        "img" : "img/tags/Pants_StraightLeg.png"
+                    },
+                    {
+                        "name": "Wide",
+                        "img" : "img/tags/Pants_Wide.png"
+                    }
+                ]
+            },
+            {
+                "name"      : "Leggings",
+                "img"       : "img/tags/icon_category_leggings.png",
+                "suboptions": [
+                    {
+                        "name": "All",
+                        "img" : "img/tags/SubCat_All.png"
+                    },
+                    {
+                        "name": "Sheer",
+                        "img" : "img/tags/Leggings_Sheer.png"
+                    },
+                    {
+                        "name": "Solid",
+                        "img" : "img/tags/Leggings_Solid.png"
+                    }
+                ]
+            },
+            {
+                "name"      : "Hosiery",
+                "img"       : "img/tags/icon_category_hosiery.png",
+                "suboptions": [
+                    {
+                        "name": "All",
+                        "img" : "img/tags/SubCat_All.png"
+                    },
+                    {
+                        "name": "Sheer",
+                        "img" : "img/tags/Hosiery_Sheer.png"
+                    },
+                    {
+                        "name": "Solid",
+                        "img" : "img/tags/Hosiery_Solid.png"
+                    }
+                ]
+            },
+            {
+                "name"      : "Shorts",
+                "img"       : "img/tags/icon_category_shorts.png",
+                "suboptions": [
+                    {
+                        "name": "All",
+                        "img" : "img/tags/SubCat_All.png"
+                    },
+                    {
+                        "name": "Knee Length",
+                        "img" : "img/tags/Shorts_KneeLength.png"
+                    },
+                    {
+                        "name": "Mid Thigh",
+                        "img" : "img/tags/Shorts_MidThigh.png"
+                    },
+                    {
+                        "name": "Mini",
+                        "img" : "img/tags/Shorts_MIni.png"
+                    },
+                    {
+                        "name": "Short",
+                        "img" : "img/tags/Shorts_Short.png"
+                    }
+                ]
+            },
+            {
+                "name"      : "Skirts",
+                "img"       : "img/tags/icon_category_skirts.png",
+                "suboptions": [
+                    {
+                        "name": "All",
+                        "img" : "img/tags/SubCat_All.png"
+                    },
+                    {
+                        "name": "Knee Length",
+                        "img" : "img/tags/Skirt_KneeLength.png"
+                    },
+                    {
+                        "name": "Maxi",
+                        "img" : "img/tags/Skirt_Maxi.png"
+                    },
+                    {
+                        "name": "Mid Thigh",
+                        "img" : "img/tags/Skirt_MidThigh.png"
+                    },
+                    {
+                        "name": "Mini",
+                        "img" : "img/tags/Skirt_Mini.png"
+                    },
+                    {
+                        "name": "Short",
+                        "img" : "img/tags/Skirt_Short.png"
+                    }
+                ]
+            },
+            {
+                "name"      : "Jumpsuits",
+                "img"       : "img/tags/icon_category_jumpsuits.png",
+                "suboptions": [
+                    {
+                        "name": "All",
+                        "img" : "img/tags/SubCat_All.png"
+                    },
+                    {
+                        "name": "Long",
+                        "img" : "img/tags/Jumpsuit_Long.png"
+                    },
+                    {
+                        "name": "Short",
+                        "img" : "img/tags/Jumpsuit_Short.png"
+                    }
+                ]
+            },
+            {
+                "name"      : "Socks",
+                "img"       : "img/tags/icon_category_socks.png",
+                "suboptions": [
+                    {
+                        "name": "All",
+                        "img" : "img/tags/SubCat_All.png"
+                    },
+                    {
+                        "name": "Ankle High",
+                        "img" : "img/tags/Socks_Ankle.png"
+                    },
+                    {
+                        "name": "Knee High",
+                        "img" : "img/tags/Socks_KneeHigh.png"
+                    },
+                    {
+                        "name": "Thigh High",
+                        "img" : "img/tags/Socks_ThighHigh.png"
+                    }
+                ]
+            },
+            {
+                "name"      : "Shoes",
+                "img"       : "img/tags/icon_category_shoes.png",
+                "suboptions": [
+                    {
+                        "name": "All",
+                        "img" : "img/tags/SubCat_All.png"
+                    },
+                    {
+                        "name": "Boots",
+                        "img" : "img/tags/Shoes_Boots.png"
+                    },
+                    {
+                        "name": "Flats",
+                        "img" : "img/tags/Shoes_Flats.png"
+                    },
+                    {
+                        "name": "Pumps",
+                        "img" : "img/tags/Shoes_Pumps.png"
+                    },
+                    {
+                        "name": "Sandals",
+                        "img" : "img/tags/Shoes_Sandals.png"
+                    },
+                    {
+                        "name": "Sneakers",
+                        "img" : "img/tags/Shoes_Sneakers.png"
+                    },
+                    {
+                        "name": "Wedges",
+                        "img" : "img/tags/Shoes_Wedges.png"
+                    }
+                ]
+            },
+            {
+                "name"      : "Jewelry",
+                "img"       : "img/tags/icon_category_jewelry.png",
+                "suboptions": [
+                    {
+                        "name": "All",
+                        "img" : "img/tags/SubCat_All.png"
+                    },
+                    {
+                        "name": "Bracelets",
+                        "img" : "img/tags/Jewelry_Bracelets.png"
+                    },
+                    {
+                        "name": "Earrings",
+                        "img" : "img/tags/Jewelry_Earrings.png"
+                    },
+                    {
+                        "name": "Necklaces",
+                        "img" : "img/tags/Jewelry_Necklaces.png"
+                    },
+                    {
+                        "name": "Rings",
+                        "img" : "img/tags/Jewelry_Rings.png"
+                    }
+                ]
+            },
+            {
+                "name"      : "Bags",
+                "img"       : "img/tags/icon_category_bags.png",
+                "suboptions": [
+                    {
+                        "name": "All",
+                        "img" : "img/tags/SubCat_All.png"
+                    },
+                    {
+                        "name": "Clutches",
+                        "img" : "img/tags/Bags_Clutches.png"
+                    },
+                    {
+                        "name": "Shoulder Bags",
+                        "img" : "img/tags/Bags_OverTheShoulder.png"
+                    },
+                    {
+                        "name": "Totes",
+                        "img" : "img/tags/Bags_Totes.png"
+                    }
+                ]
+            },
+            {
+                "name"      : "Accessories",
+                "img"       : "img/tags/icon_category_accessories.png",
+                "suboptions": [
+                    {
+                        "name": "All",
+                        "img" : "img/tags/SubCat_All.png"
+                    },
+                    {
+                        "name": "Belts",
+                        "img" : "img/tags/Accessories_Belts.png"
+                    },
+                    {
+                        "name": "Glasses",
+                        "img" : "img/tags/Accessories_Glasses.png"
+                    },
+                    {
+                        "name": "Gloves",
+                        "img" : "img/tags/Accessories_Gloves.png"
+                    },
+                    {
+                        "name": "Hats",
+                        "img" : "img/tags/Accessories_Hats.png"
+                    },
+                    {
+                        "name": "Headphones",
+                        "img" : "img/tags/Accessories_Headphones.png"
+                    },
+                    {
+                        "name": "Scarves",
+                        "img" : "img/tags/Accessories_Scarf.png"
+                    }
+                ]
+            },
+            {
+                "name"      : "Swimwear",
+                "img"       : "img/tags/icon_category_swimwear.png",
+                "suboptions": [
+                    {
+                        "name": "All",
+                        "img" : "img/tags/SubCat_All.png"
+                    },
+                    {
+                        "name": "Bikini Bottom",
+                        "img" : "img/tags/Swimwear_BikiniBottom.png"
+                    },
+                    {
+                        "name": "Bikini Top",
+                        "img" : "img/tags/Swimwear_BikiniTop.png"
+                    },
+                    {
+                        "name": "Cover-Ups",
+                        "img" : "img/tags/Swimwear_Cover-Ups.png"
+                    },
+                    {
+                        "name": "One Piece",
+                        "img" : "img/tags/Swimwear_OnePiece.png"
+                    }
+                ]
+            }
+        ];
+        return categories;
+    }
+
+    function requestFilterList(successCallback, errorCallback) {
+        // TODO: request the filter list with api.
+        var filters = [
+            {
+                "name"      : "Season",
+                "img"       : "img/tags/icon_filter_season.png",
+                "suboptions": [
+                    {
+                        "name": "All",
+                        "img" : "img/tags/SubCat_All.png"
+                    },
+                    {
+                        "name": "Winter 2016",
+                        "img" : "img/tags/icon_filter_season_winter.png"
+                    },
+                    {
+                        "name": "Autumn 2016",
+                        "img" : "img/tags/icon_filter_season_fall.png"
+                    },
+                    {
+                        "name": "Summer 2016",
+                        "img" : "img/tags/icon_filter_season_summer.png"
+                    },
+                    {
+                        "name": "Spring 2016",
+                        "img" : "img/tags/icon_filter_season_spring.png"
+                    },
+                    {
+                        "name": "Winter 2015",
+                        "img" : "img/tags/icon_filter_season_winter.png"
+                    },
+                    {
+                        "name": "Autumn 2015",
+                        "img" : "img/tags/icon_filter_season_fall.png"
+                    },
+                    {
+                        "name": "Summer 2015",
+                        "img" : "img/tags/icon_filter_season_summer.png"
+                    },
+                    {
+                        "name": "Spring 2015",
+                        "img" : "img/tags/icon_filter_season_spring.png"
+                    },
+                    {
+                        "name": "Winter 2014",
+                        "img" : "img/tags/icon_filter_season_winter.png"
+                    },
+                    {
+                        "name": "Autumn 2014",
+                        "img" : "img/tags/icon_filter_season_fall.png"
+                    },
+                    {
+                        "name": "Summer 2014",
+                        "img" : "img/tags/icon_filter_season_summer.png"
+                    },
+                    {
+                        "name": "Spring 2014",
+                        "img" : "img/tags/icon_filter_season_spring.png"
+                    },
+                    {
+                        "name": "Winter 2013",
+                        "img" : "img/tags/icon_filter_season_winter.png"
+                    },
+                    {
+                        "name": "Autumn 2013",
+                        "img" : "img/tags/icon_filter_season_fall.png"
+                    }
+                ]
+            },
+            {
+                "name"      : "Color",
+                "img"       : "img/tags/icon_filter_color.png",
+                "suboptions": [
+                    {
+                        "name": "All",
+                        "img" : "img/tags/SubCat_All.png"
+                    },
+                    {
+                        "name": "Blue",
+                        "img" : "img/tags/icon_filter_color_blue.png"
+                    },
+                    {
+                        "name": "Black",
+                        "img" : "img/tags/icon_filter_color_black.png"
+                    },
+                    {
+                        "name": "Brown",
+                        "img" : "img/tags/icon_filter_color_brown.png"
+                    },
+                    {
+                        "name": "Gold",
+                        "img" : "img/tags/icon_filter_color_gold.png"
+                    },
+                    {
+                        "name": "Green",
+                        "img" : "img/tags/icon_filter_color_green.png"
+                    },
+                    {
+                        "name": "Grey",
+                        "img" : "img/tags/icon_filter_color_grey.png"
+                    },
+                    {
+                        "name": "Metallic",
+                        "img" : "img/tags/icon_filter_color_metallic.png"
+                    },
+                    {
+                        "name": "Nude",
+                        "img" : "img/tags/icon_filter_color_nude.png"
+                    },
+                    {
+                        "name": "Off White",
+                        "img" : "img/tags/icon_filter_color_offwhite.png"
+                    },
+                    {
+                        "name": "Orange",
+                        "img" : "img/tags/icon_filter_color_orange.png"
+                    },
+                    {
+                        "name": "Pink",
+                        "img" : "img/tags/icon_filter_color_pink.png"
+                    },
+                    {
+                        "name": "Purple",
+                        "img" : "img/tags/icon_filter_color_purple.png"
+                    },
+                    {
+                        "name": "Red",
+                        "img" : "img/tags/icon_filter_color_red.png"
+                    },
+                    {
+                        "name": "Silver",
+                        "img" : "img/tags/icon_filter_color_silver.png"
+                    },
+                    {
+                        "name": "Tan",
+                        "img" : "img/tags/icon_filter_color_tan.png"
+                    },
+                    {
+                        "name": "Turquoise",
+                        "img" : "img/tags/icon_filter_color_turquoise.png"
+                    },
+                    {
+                        "name": "White",
+                        "img" : "img/tags/icon_filter_color_white.png"
+                    },
+                    {
+                        "name": "Yellow",
+                        "img" : "img/tags/icon_filter_color_yellow.png"
+                    }
+                ]
+            },
+            {
+                "name"      : "Material",
+                "img"       : "img/tags/icon_filter_material.png",
+                "suboptions": [
+                    {
+                        "name": "All",
+                        "img" : "img/tags/SubCat_All.png"
+                    },
+                    {
+                        "name": "Boucle",
+                        "img" : "img/tags/icon_Material_Boucle.png"
+                    },
+                    {
+                        "name": "Brass",
+                        "img" : "img/tags/icon_Material_Brass.png"
+                    },
+                    {
+                        "name": "Brocade",
+                        "img" : "img/tags/icon_Material_Brocade.png"
+                    },
+                    {
+                        "name": "Canvas",
+                        "img" : "img/tags/icon_Material_Canvas.png"
+                    },
+                    {
+                        "name": "Cashmere",
+                        "img" : "img/tags/icon_Material_Cashmere.png"
+                    },
+                    {
+                        "name": "Chiffon",
+                        "img" : "img/tags/icon_Material_Chiffon.png"
+                    },
+                    {
+                        "name": "Cotton",
+                        "img" : "img/tags/icon_Material_Cotton.png"
+                    },
+                    {
+                        "name": "Crepe",
+                        "img" : "img/tags/icon_Material_Crepe.png"
+                    },
+                    {
+                        "name": "Crochet",
+                        "img" : "img/tags/icon_Material_Crochet.png"
+                    },
+                    {
+                        "name": "Denim",
+                        "img" : "img/tags/icon_Material_Denim.png"
+                    },
+                    {
+                        "name": "Felt",
+                        "img" : "img/tags/icon_Material_Felt.png"
+                    },
+                    {
+                        "name": "Fur",
+                        "img" : "img/tags/icon_Material_Fur.png"
+                    },
+                    {
+                        "name": "Gaberdine",
+                        "img" : "img/tags/icon_Material_Gabardine.png"
+                    },
+                    {
+                        "name": "Gauze",
+                        "img" : "img/tags/icon_Material_Guaze.png"
+                    },
+                    {
+                        "name": "Gold",
+                        "img" : "img/tags/icon_Material_Gold.png"
+                    },
+                    {
+                        "name": "Jacquard",
+                        "img" : "img/tags/icon_Material_Jacquard.png"
+                    },
+                    {
+                        "name": "Jersey",
+                        "img" : "img/tags/icon_Material_Jersey.png"
+                    },
+                    {
+                        "name": "Knit",
+                        "img" : "img/tags/icon_Material_Knit.png"
+                    },
+                    {
+                        "name": "Lace",
+                        "img" : "img/tags/icon_Material_Lace.png"
+                    },
+                    {
+                        "name": "Leather",
+                        "img" : "img/tags/icon_Material_Leather.png"
+                    },
+                    {
+                        "name": "Linen",
+                        "img" : "img/tags/icon_Material_Linen.png"
+                    },
+                    {
+                        "name": "Modal",
+                        "img" : "img/tags/icon_Material_Modal.png"
+                    },
+                    {
+                        "name": "Mohair",
+                        "img" : "img/tags/icon_Material_Mohair.png"
+                    },
+                    {
+                        "name": "Neoprene",
+                        "img" : "img/tags/icon_Material_Neoprene.png"
+                    },
+                    {
+                        "name": "Nylon",
+                        "img" : "img/tags/icon_Material_Nylon.png"
+                    },
+                    {
+                        "name": "Other",
+                        "img" : "img/tags/icon_Filter_Other.png"
+                    },
+                    {
+                        "name": "Pearl",
+                        "img" : "img/tags/icon_Material_Pearl.png"
+                    },
+                    {
+                        "name": "Polyester",
+                        "img" : "img/tags/icon_Material_Polyester.png"
+                    },
+                    {
+                        "name": "Ponte",
+                        "img" : "img/tags/icon_Material_Ponte.png"
+                    },
+                    {
+                        "name": "Rayon",
+                        "img" : "img/tags/icon_Material_Rayon.png"
+                    },
+                    {
+                        "name": "Rubber",
+                        "img" : "img/tags/icon_Material_Rubber.png"
+                    },
+                    {
+                        "name": "Silk",
+                        "img" : "img/tags/icon_Material_Silk.png"
+                    },
+                    {
+                        "name": "Silver",
+                        "img" : "img/tags/icon_Material_Silver.png"
+                    },
+                    {
+                        "name": "Spandex",
+                        "img" : "img/tags/icon_Material_Spandex.png"
+                    },
+                    {
+                        "name": "Straw",
+                        "img" : "img/tags/icon_Material_Straw.png"
+                    },
+                    {
+                        "name": "Suede",
+                        "img" : "img/tags/icon_Material_Suede.png"
+                    },
+                    {
+                        "name": "Tweed",
+                        "img" : "img/tags/icon_Material_Tweed.png"
+                    },
+                    {
+                        "name": "Velvet",
+                        "img" : "img/tags/icon_Material_Velvet.png"
+                    },
+                    {
+                        "name": "Viscose",
+                        "img" : "img/tags/icon_Material_Viscose.png"
+                    },
+                    {
+                        "name": "Wool",
+                        "img" : "img/tags/icon_Material_Wool.png"
+                    }
+                ]
+            },
+            {
+                "name"      : "Pattern",
+                "img"       : "img/tags/icon_filter_pattern.png",
+                "suboptions": [
+                    {
+                        "name": "All",
+                        "img" : "img/tags/SubCat_All.png"
+                    },
+                    {
+                        "name": "Animal",
+                        "img" : "img/tags/icon_Pattern_Animal.png"
+                    },
+                    {
+                        "name": "Beaded",
+                        "img" : "img/tags/icon_Pattern_Beaded.png"
+                    },
+                    {
+                        "name": "Camo",
+                        "img" : "img/tags/icon_Pattern_Camo.png"
+                    },
+                    {
+                        "name": "Floral",
+                        "img" : "img/tags/icon_Pattern_Floral.png"
+                    },
+                    {
+                        "name": "Graphic",
+                        "img" : "img/tags/icon_Pattern_Graphic.png"
+                    },
+                    {
+                        "name": "Ikat",
+                        "img" : "img/tags/icon_Pattern_Ikat.png"
+                    },
+                    {
+                        "name": "Mosaic",
+                        "img" : "img/tags/icon_Pattern_Mosaic.png"
+                    },
+                    {
+                        "name": "Multi",
+                        "img" : "img/tags/icon_Pattern_Multi.png"
+                    },
+                    {
+                        "name": "Ombre",
+                        "img" : "img/tags/icon_Pattern_Ombre.png"
+                    },
+                    {
+                        "name": "Plaid",
+                        "img" : "img/tags/icon_Pattern_Plaid.png"
+                    },
+                    {
+                        "name": "Polka Dot",
+                        "img" : "img/tags/icon_Pattern_PolkaDot.png"
+                    },
+                    {
+                        "name": "Python",
+                        "img" : "img/tags/icon_Pattern_Python.png"
+                    },
+                    {
+                        "name": "Sequin",
+                        "img" : "img/tags/icon_Pattern_Sequins.png"
+                    },
+                    {
+                        "name": "Snake",
+                        "img" : "img/tags/icon_Pattern_SnakeSkin.png"
+                    },
+                    {
+                        "name": "Stripe",
+                        "img" : "img/tags/icon_Pattern_Stripes.png"
+                    },
+                    {
+                        "name": "Stud",
+                        "img" : "img/tags/icon_Pattern_Stud.png"
+                    },
+                    {
+                        "name": "Two Toned",
+                        "img" : "img/tags/icon_Pattern_TwoToned.png"
+                    }
+                ]
+            },
+            {
+                "name"      : "Other",
+                "img"       : "img/tags/icon_Filter_Other.png",
+                "suboptions": [
+                    {
+                        "name": "All",
+                        "img" : "img/tags/SubCat_All.png"
+                    },
+                    {
+                        "name": "Active Wear",
+                        "img" : "img/tags/icon_Other_Activewear.png"
+                    },
+                    {
+                        "name": "Borrowed",
+                        "img" : "img/tags/icon_Other_Borrowed.png"
+                    },
+                    {
+                        "name": "Prizes",
+                        "img" : "img/tags/icon_Other_Prizes.png"
+                    },
+                    {
+                        "name": "Unworn",
+                        "img" : "img/tags/icon_Other_Unworn.png"
+                    }
+                ]
+            }
+        ];
+        return filters;
+    }
+
+	return {
+		requestTabList     : requestTabList,
+		requestCategoryList: requestCategoryList,
+		requestFilterList  : requestFilterList
+	};
+}]);
