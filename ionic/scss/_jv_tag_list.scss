@@ -5,7 +5,7 @@
     right: 0;
     top: 0;
     .jv-tabs-item {
-        font-size: 1.2em;
+        font-size: 1em;
     }
     .jv-tabs-content {
         > .overflow-scroll {
@@ -18,16 +18,17 @@
         @include box-sizing(border-box);
         left: 0;
         opacity: 0;
-        padding: 0 0 0 0.5%;
+        padding: 0 0.5%;
         position: fixed;
         right: 0;
         > .button {
             @include border-radius(0);
             @include box-sizing(border-box);
             display: inline-block;
-            font-size: 1.2em;
-            line-height: 1.5;
-            padding: 2.3% 0;
+            font-size: 1em;
+            line-height: 1;
+            min-height: 0;
+            padding: 2.5% 0;
             text-transform: uppercase;
             width: 49.5%;
         }
