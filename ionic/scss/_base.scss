@@ -26,7 +26,7 @@ textarea,
         @include border-radius(0);
     }
     &::-webkit-scrollbar-thumb {
-        background: #fff;
+        background: #ccc;
         @include border-radius(0);
     }
     &::-webkit-scrollbar-thumb:window-inactive {
