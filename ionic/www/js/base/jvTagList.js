@@ -209,12 +209,12 @@ function($rootScope, $timeout, $ionicPosition, $ionicSlideBoxDelegate, $ionicScr
         }
 
         function checkScrolling(itemEle) {
-            var rfTabsContentEle = itemEle.closest('.jv-tabs-content'),
+            var jvTabsContentEle = itemEle.closest('.jv-tabs-content'),
                 scrollContentEle = itemEle.closest('.overflow-scroll'),
-                actionsEle       = rfTabsContentEle.closest('.jv-tag-list').querySelector('.actions'),
+                actionsEle       = jvTabsContentEle.closest('.jv-tag-list').querySelector('.actions'),
                 listSubtagEle    = null,
                 screenHeight     = window.screen.availHeight,
-                offset           = $ionicPosition.offset(angular.element(rfTabsContentEle)),
+                offset           = $ionicPosition.offset(angular.element(jvTabsContentEle)),
                 viewHeight       = screenHeight - offset.top - actionsEle.offsetHeight,
                 handleName       = $scope.selectedTabIdx === 0 ? 'categoryListDelegate' : 'filterListDelegate',
                 delegate         = $ionicScrollDelegate.$getByHandle(handleName),
@@ -222,7 +222,7 @@ function($rootScope, $timeout, $ionicPosition, $ionicSlideBoxDelegate, $ionicScr
                 position         = delegate.getScrollPosition(),
                 top              = 0;
             $timeout(function() {
-                listSubtagEle = rfTabsContentEle.querySelector('.col .list-subtag.active');
+                listSubtagEle = jvTabsContentEle.querySelector('.col .list-subtag.active');
                 if (listSubtagEle && (listSubtagEle.offsetTop + listSubtagEle.offsetHeight > position.top + viewHeight)) {
                     top = listSubtagEle.offsetTop + listSubtagEle.offsetHeight + position.top - viewHeight + 2;
                     delegate.scrollTo(0, top);
