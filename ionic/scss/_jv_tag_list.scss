@@ -21,15 +21,18 @@
         padding: 0 0 0 0.5%;
         position: fixed;
         right: 0;
-        > .cta-light {
+        > .button {
+            @include border-radius(0);
             @include box-sizing(border-box);
             display: inline-block;
             font-size: 1.2em;
+            line-height: 1.5;
             padding: 2.3% 0;
+            text-transform: uppercase;
             width: 49.5%;
         }
         &.show {
-            bottom: 48px;
+            bottom: 90px;
             opacity: 1;
         }
     }
