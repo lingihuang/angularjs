@@ -1,16 +1,3 @@
-<!--<ion-side-menus enable-menu-with-back-views="true">
-    <ion-side-menu-content>
-        <ion-header-bar class="button-bar button-bar-menu bar-subheader">
-            <ion-scroll direction="x" scrollbar-x="false">
-                <div class="button rf-ripple" ng-repeat="menu in menus" ng-class="{'active': menu.selected}" ng-click="handleMenuClick($index, menu.state)">
-                    <em>{{::menu.name}}</em>
-                </div>
-            </ion-scroll>
-        </ion-header-bar>
-    </ion-side-menu-content>
-    <ion-nav-view name="menuContent"></ion-nav-view>
-</ion-side-menus>-->
-
 <ion-header-bar class="button-bar button-bar-menu">
     <ion-scroll direction="x" scrollbar-x="false">
         <a class="button" ng-repeat="menu in menus" ng-class="{'active': menu.selected}" ng-click="handleMenuClick($index)" href="{{menu.href}}">
