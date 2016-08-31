@@ -4,15 +4,17 @@
     <meta charset="utf-8">
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
     <title>Ionic Demo</title>
-    <!-- compiled css output -->
+    <!-- build:css dist_css/styles.css -->
     <link href="css/ionic.app.css" rel="stylesheet">
-
-    <!-- ionic/angularjs js -->
-    <script src="lib/ionic/js/ionic.bundle.js"></script>
+    <!-- endbuild -->
 
     <!-- cordova script (this will be a 404 during development) -->
     <script src="cordova.js"></script>
 
+    <!-- build:js dist_js/app.js -->
+    <!-- ionic/angularjs js -->
+    <script src="lib/ionic/js/ionic.bundle.js"></script>
+    <script src="lib/ngCordova/dist/ng-cordova.js"></script>
     <script src="dist/dist_js/app/templates.js"></script>
     <script src="dist/dist_js/app/server/index.js"></script>
     <script src="dist/dist_js/app/server/ServerService.js"></script>
@@ -31,9 +33,9 @@
     <script src="dist/dist_js/app/plans/PlansCtrl.js"></script>
     <script src="dist/dist_js/app/account/index.js"></script>
     <script src="dist/dist_js/app/account/AccountCtrl.js"></script>
-
     <!-- your app's js -->
     <script src="dist/dist_js/app/app.js"></script>
+    <!-- endbuild -->
 </head>
 <body ng-app="jv" ng-strict-di>
     <!--
