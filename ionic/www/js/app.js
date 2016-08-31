@@ -6,7 +6,7 @@
 // 'starter.services' is found in services.js
 // 'starter.controllers' is found in controllers.js
 angular.module('jv',
-['ionic', 'jv.server', 'jv.base', 'jv.recipes', 'jv.health', 'jv.plans', 'jv.account'])
+['ionic', 'templates', 'jv.server', 'jv.base', 'jv.recipes', 'jv.health', 'jv.plans', 'jv.account'])
 .run(function($ionicPlatform) {
     $ionicPlatform.ready(function() {
         // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
@@ -35,14 +35,14 @@ angular.module('jv',
     .state('app', {
         url        : '/app',
         abstract   : true,
-        templateUrl: 'templates/menu.html',
+        templateUrl: 'menu.html',
         controller : 'AppCtrl'
     })
     .state('app.recipes', {
         url: '/recipes',
         views: {
             'menuContent': {
-                templateUrl: 'templates/recipes.html',
+                templateUrl: 'recipes.html',
                 controller : 'RecipesCtrl'
             }
         }
@@ -51,7 +51,7 @@ angular.module('jv',
         url: '/health',
         views: {
             'menuContent': {
-                templateUrl: 'templates/health.html',
+                templateUrl: 'health.html',
                 controller : 'HealthCtrl'
             }
         }
@@ -60,7 +60,7 @@ angular.module('jv',
         url: '/plans',
         views: {
             'menuContent': {
-                templateUrl: 'templates/plans.html',
+                templateUrl: 'plans.html',
                 controller : 'PlansCtrl'
             }
         }
@@ -69,7 +69,7 @@ angular.module('jv',
         url: '/account',
         views: {
             'menuContent': {
-                templateUrl: 'templates/account.html',
+                templateUrl: 'account.html',
                 controller : 'AccountCtrl'
             }
         }

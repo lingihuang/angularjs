@@ -582,7 +582,7 @@ function($rootScope, $timeout, $ionicPosition, $ionicSlideBoxDelegate, $ionicScr
     }
 
 	return {
-        templateUrl: 'templates/jv_tag_list.html',
+        templateUrl: 'jv_tag_list.html',
         transclude : true,
         restrict   : 'AE',
         replace    : true,
