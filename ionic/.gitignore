@@ -8,4 +8,5 @@ platforms/
 plugins/
 templates.js
 www/css
+www/dist
 www/lib
