@@ -3,7 +3,7 @@ var gutil         = require('gulp-util');
 var bower         = require('bower');
 var concat        = require('gulp-concat');
 var sass          = require('gulp-sass');
-var minifyCss     = require('gulp-minify-css');
+var cleanCss      = require('gulp-clean-css');
 var templateCache = require('gulp-angular-templatecache');
 var jshint        = require('gulp-jshint');
 var ngAnnotate    = require('gulp-ng-annotate');
@@ -25,7 +25,7 @@ gulp.task('sass', function(done) {
         .pipe(sass())
         .on('error', sass.logError)
         .pipe(gulp.dest('./www/css/'))
-        .pipe(minifyCss({
+        .pipe(cleanCss({
             keepSpecialComments: 0
         }))
         .pipe(rename({ extname: '.min.css' }))
