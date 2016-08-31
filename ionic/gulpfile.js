@@ -48,14 +48,10 @@ gulp.task('ng_annotate', function(done) {
 });
 
 gulp.task('useref', function(done) {
-    // var assets = useref.assets();
-    // gulp.src('./www/*.html')
-    //     .pipe(assets)
-    //     .pipe(assets.restore())
-    //     .pipe(useref())
-    //     .pipe(gulp.dest('./www/dist'))
-    //     .on('end', done);
+    var assets = useref.assets();
     gulp.src('./www/*.html')
+        .pipe(assets)
+        .pipe(assets.restore())
         .pipe(useref())
         .pipe(gulp.dest('./www/dist'))
         .on('end', done);
