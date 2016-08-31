@@ -5,6 +5,7 @@ var concat        = require('gulp-concat');
 var sass          = require('gulp-sass');
 var minifyCss     = require('gulp-minify-css');
 var templateCache = require('gulp-angular-templatecache');
+var jshint        = require('gulp-jshint');
 var rename        = require('gulp-rename');
 var sh            = require('shelljs');
 
@@ -13,7 +14,7 @@ var paths = {
     templatecache: ['./www/templates/**/*.html']
 };
 
-gulp.task('default', ['sass', 'templatecache']);
+gulp.task('default', ['sass', 'templatecache', 'jshint']);
 
 gulp.task('sass', function(done) {
     gulp.src('./scss/ionic.app.scss')
@@ -33,6 +34,13 @@ gulp.task('templatecache', function(done) {
         .pipe(templateCache({standalone: true}))
         .pipe(gulp.dest('./www/js'))
         .on('end', done);
+});
+
+gulp.task('jshint', function(done) {
+    return gulp.src('./www/js/**/*.js')
+        .pipe(jshint())
+        .pipe(jshint.reporter('jshint-stylish'))
+        .pipe(jshint.reporter('fail'));
 });
 
 gulp.task('watch', function() {
