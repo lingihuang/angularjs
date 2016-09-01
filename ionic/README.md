@@ -21,7 +21,7 @@ $ npm install
 $ bower install
 ```
 
-* Step 4: test in browser.
+* Step 4: test in a browser.
 
 ```bash
 $ ionic serve
